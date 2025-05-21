@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0, user-scalable=no, width=device-width"
+    />
+    <title>HELLO, AMAP!</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      html,
+      body,
+      #container {
+        width: 100%;
+        height: 100%;
+      }
+     </style>
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+          securityJsCode: "266ea13773ec1af0dee72121babc6b7e",
+        };
+      </script>
+      <!-- 添加驾车路线规划插件 -->
+      <script src="https://webapi.amap.com/maps?v=2.0&key=461dc62bb93c4e671ae97955e485deb9&plugin=AMap.Driving"></script>
+  </head>
+  <body>
+    <main>
+    <nave>
+      <li><a href="1.html">首页</a></li>
+      <li><a href="驾车.html">驾车</a></li>
+      <li><a href="骑行.html">骑行</a></li>
+      <li><a href="步行.html">步行</a></li>
+      <li><a href="公交.html">公交</a></li>
+  </nave>
+</main>
+    <div id="container"></div>
+    <script>
+    const map = new AMap.Map("container", {
+        viewMode: '2D',
+        zoom: 17,
+        center: [123.505189,41.731743],
+      });
+     
+      //异步加载控件
+AMap.plugin('AMap.ToolBar',function(){ 
+  var toolbar = new AMap.ToolBar(); //缩放工具条实例化
+  map.addControl(toolbar); //添加控件
+});
+AMap.plugin('AMap.Scale',function(){
+    var Scale =new AMap.Scale();
+    map.addControl(Scale);
+});
+AMap.plugin('AMap.ControlBar',function(){
+    var ControlBar=new AMap.ControlBar;
+    map.addControl(ControlBar);
+});
+    // 正确加载插件的方式
+    AMap.plugin('AMap.Driving', function() {
+      // 插件加载完成后执行
+      var driving = new AMap.Driving({
+        map: map,
+        policy: AMap.DrivingPolicy.LEAST_TIME // 可以根据需要设置策略
+      });
+      
+      // 添加起终点标记
+      const startMarker = new AMap.Marker({
+        position: [123.505189,41.731743],
+        icon: 'https://webapi.amap.com/theme/v1.3/markers/n/start.png'
+      });
+      const endMarker = new AMap.Marker({
+        position: [123.455677,41.798387],
+        icon: 'https://webapi.amap.com/theme/v1.3/markers/n/end.png'
+      });
+ AMap.plugin('AMap.Geolocation', function() {
+  var geolocation = new AMap.Geolocation({
+    enableHighAccuracy: true, // 是否使用高精度定位，默认：true
+    timeout: 10000, // 设置定位超时时间，默认：无穷大
+    offset: [10, 20],  // 定位按钮的停靠位置的偏移量
+    zoomToAccuracy: true,  //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    position: 'RB' //  定位按钮的排放位置,  RB表示右下
+  })
+  AMap.plugin('Geolocation',function(){
+    var Geolocation=new AMap.Geolocation;
+    map.addControl(Geolocation);
+});
+  geolocation.getCurrentPosition(function(status,result){
+        if(status=='complete'){
+            onComplete(result)
+        }else{
+            onError(result)
+        }
+  });
+
+  function onComplete (data) {
+    // data是具体的定位信息
+  }
+
+  function onError (data) {
+    // 定位出错
+  }
+})
+      map.add([startMarker, endMarker]);
+      driving.search(new AMap.LngLat(123.505189,41.731743), new AMap.LngLat(123.455677,41.798387), function (status, result) {
+      // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+      if (status === 'complete') {
+        log.success('绘制驾车路线完成')
+        map.setCenter([116.442581,39.882498])
+      } else {
+        log.error('获取驾车数据失败：' + result)
+      }
+    });
+  });
+ 
+      </script>
+  </body>
+</html>

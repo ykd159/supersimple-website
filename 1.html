@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沈阳故宫博物院</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 新增轮播图样式 */
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            overflow: hidden;
+        }
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            height: 100%;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        .slider-dot.active {
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <nav>
+            <li><a href="1.html">首页</a></li>
+            <li><a href="2.html">景点介绍</a></li>
+            <li><a href="img.html">周边美食推荐</a></li>
+            <li><a href="role.html">景点导航</a></li>
+            <li><a href="login.html">登录|注册</a></li>
+            <li><a href="contact.html">联系我们</a></li>
+        </nav>
+        
+        <!-- 新增轮播图部分 -->
+        <div class="slider">
+            <div class="slides">
+                <div class="slide">
+                    <img src="images/9.jpg" alt="沈阳故宫图片1">
+                </div>
+                <div class="slide">
+                    <img src="images/1.jpg" alt="沈阳故宫图片2">
+                </div>
+                <div class="slide">
+                    <img src="images/8.jpg" alt="沈阳故宫图片3">
+                </div>
+                <div class="slide">
+                    <img src="images/4.jpg" alt="沈阳故宫图片4">
+                </div>
+            </div>
+            <div class="slider-nav">
+                <div class="slider-dot active"></div>
+                <div class="slider-dot"></div>
+                <div class="slider-dot"></div>
+                <div class="slider-dot"></div>
+            </div>
+        </div>
+        <div class="title">
+            <hr>
+            <span>沈阳故宫博物院</span>
+            <hr>
+        </div>
+        <div class="info">
+            <img src="images/2.jpg" alt="">
+            <div class="info-text">
+                <div class="info-title">
+                    故宫介绍
+                </div>
+                <div class="info-p">
+                    沈阳故宫，又称盛京皇宫，位于辽宁省沈阳市沈河区，为清朝初期的皇宫。沈阳故宫始建于清太祖天命十年（1625年），建成于清崇德元年（1636年）。 [1]总占地面积63272平方米，建筑面积18968平方米。 [2]它不仅是中国仅存的两大皇家宫殿建筑群之一，也是中国关外唯一的一座皇家建筑群。 [3]清朝迁都北京后，故宫被称作"陪都宫殿""留都宫殿"。 [4]后来就称之为沈阳故宫。共经历努尔哈赤、皇太极、乾隆三个建造时期，历时158年。 [5]建筑100余座、500余间。 [1] [6]入关以后，康熙、乾隆、嘉庆、道光，相继十次"东巡"时作为驻跸所在。 [2]沈阳故宫按照建筑布局和建造先后，可以分为3个部分：东路、中路和西路。东路包括努尔哈赤时期建造的大政殿与十王亭，是皇帝举行大典和八旗大臣办公的地方。中路为清太宗时期续建，是皇帝进行政治活动和后妃居住的场所。西路则是清朝皇帝"东巡"盛京时，读书看戏和存放《四库全书》的场所。在建筑艺术上承袭了中国古代建筑传统，集汉、满、蒙族建筑艺术为一体，具有很高的历史和艺术价值。 [7]1961年3月4日，沈阳故宫被中华人民共和国国务院公布为第一批全国重点文物保护单位。 [8]2004年7月1日，在中国苏州召开的第28届世界遗产委员会会议批准沈阳故宫作为明清皇宫文化遗产扩展项目列入《世界遗产名录》。
+                </div>
+            </div>
+        </div>
+        <div class="title">
+            <hr>
+            <span>景点相册</span>
+            <hr>
+        </div>
+        <div class="imglist">
+            <img src="images/1.jpg" alt="">
+            <img src="images/3.jpg" alt="">
+            <img src="images/4.jpg" alt="">
+            <img src="images/5.jpg" alt="">
+            <img src="images/6.jpg" alt="">
+            <img src="images/7.jpg" alt="">
+            <img src="images/8.jpg" alt="">
+        </div>
+
+        <footer>沈阳故宫博物院<footer>
+    </main>
+    
+    <script>
+        // 轮播图脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelector('.slides');
+            const dots = document.querySelectorAll('.slider-dot');
+            let currentSlide = 0;
+            const slideCount = document.querySelectorAll('.slide').length;
+            
+            function goToSlide(n) {
+                slides.style.transform = `translateX(-${n * 100}%)`;
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[n].classList.add('active');
+                currentSlide = n;
+            }
+            
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slideCount;
+                goToSlide(currentSlide);
+            }
+            
+            // 点击导航点切换
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => goToSlide(index));
+            });
+            
+            // 自动轮播
+            setInterval(nextSlide, 3000);
+        });
+    </script>
+</body>
+</html>
